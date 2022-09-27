@@ -1,8 +1,6 @@
 package ua.hillelit.lms.homeworck;
 
-import java.util.Objects;
-
-public class ValueCalculator implements Runnable {
+public class ValueCalculator {
 
   private final int len;
   private float[] a1;
@@ -21,18 +19,7 @@ public class ValueCalculator implements Runnable {
 
     splitArray(arr, half);
 
-    Thread thread1 = new Thread(this, "Thread1");
-    Thread thread2 = new Thread(this, "Thread2");
-
-    thread1.start();
-    thread2.start();
-
-    try {
-      thread1.join();
-      thread2.join();
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
+    runThreads();
 
     mergeTwoArrays(arr, half);
 
@@ -56,21 +43,18 @@ public class ValueCalculator implements Runnable {
     System.arraycopy(arr, half, a2, 0, half);
   }
 
-  @Override
-  public void run() {
-    if (Objects.equals(Thread.currentThread().getName(), "Thread1")) {
-      calcNewValue(a1);
-    }
+  private void runThreads() {
+    Thread thread1 = new Thread(new MyThread(a1));
+    Thread thread2 = new Thread(new MyThread(a2));
 
-    if (Objects.equals(Thread.currentThread().getName(), "Thread2")) {
-      calcNewValue(a2);
-    }
-  }
+    thread1.start();
+    thread2.start();
 
-  private void calcNewValue(float[] arr) {
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(
-          0.4f + i / 2));
+    try {
+      thread1.join();
+      thread2.join();
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     }
   }
 
