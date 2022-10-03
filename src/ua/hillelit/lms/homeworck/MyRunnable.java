@@ -1,10 +1,10 @@
 package ua.hillelit.lms.homeworck;
 
-public class MyThread implements Runnable {
+public class MyRunnable implements Runnable {
 
   private final float[] arr;
 
-  public MyThread(float[] arr) {
+  public MyRunnable(float[] arr) {
     this.arr = arr;
   }
 

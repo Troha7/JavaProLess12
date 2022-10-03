@@ -44,8 +44,8 @@ public class ValueCalculator {
   }
 
   private void runThreads() {
-    Thread thread1 = new Thread(new MyThread(a1));
-    Thread thread2 = new Thread(new MyThread(a2));
+    Thread thread1 = new Thread(new MyRunnable(a1));
+    Thread thread2 = new Thread(new MyRunnable(a2));
 
     thread1.start();
     thread2.start();
